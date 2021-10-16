@@ -16,7 +16,7 @@
 
 ## Live Demo
 
-[Live Demo Link](https://livedemo.com)
+[Live Demo Link](https://ahmed-al-farouq.github.io/calculator/)
 
 ### Prerequisites
   #### Have knowledge in these technologies
