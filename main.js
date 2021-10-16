@@ -13,6 +13,7 @@ class Calculator {
     this.prevOperandContent = prevOperandContent;
     this.nextOperandContent = nextOperandContent;
     this.operatorOutput = operatorOutput;
+    this.justComputed = false;
     this.clear();
   }
 
@@ -24,16 +25,20 @@ class Calculator {
   }
 
   delete() {
-    if (this.nextOperandContent !== ' ') {
+    if (this.nextOperandContent !== '') {
       this.nextOperandContent = this.nextOperandContent.toString().slice(0, this.nextOperandContent.length - 1);
-      this.nextOperandContent = this.nextOperandContent.slice(0, this.nextOperandContent.length - 1);
-    } else if (this.nextOperandContent === '' && this.operatorOutput !== '') {
+    } else {
       this.operatorOutput = undefined;
     }
   }
 
   addNum(num) {
-    this.nextOperandContent += num;
+    if (this.justComputed) {
+      this.nextOperandContent = num;
+      this.justComputed = false;
+    } else {
+      this.nextOperandContent += num;
+    }
     return this.nextOperandContent;
   }
 
@@ -49,15 +54,18 @@ class Calculator {
       this.prevOperandContent = this.nextOperandContent;
       this.nextOperandContent = '';
       return this.nextOperandContent;
-    } if (this.operatorOutput !== undefined && this.prevOperandContent !== '' && this.nextOperandContent !== '') { // Call compute Here......
+    } if (this.operatorOutput !== undefined && this.prevOperandContent !== '' && this.nextOperandContent !== '') {
       this.compute();
       this.operatorOutput = operation;
       return this.operatorOutput;
     }
+    this.operatorOutput = operation;
+
     return this.operatorOutput;
   }
 
   compute() {
+    this.justComputed = true;
     const prev = parseFloat(this.prevOperandContent, 10);
     const current = parseFloat(this.nextOperandContent, 10);
     switch (this.operatorOutput) {
